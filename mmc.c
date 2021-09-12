@@ -6,11 +6,13 @@
 #define BUSY 1
 #define IDLE 0
 #define Q_LIMIT 1000000
+
 int next_event_type, num_events, num_in_q;
 int server_status[10000];
 int num_of_server_idle, server_number, total_num_of_server;
 int num_delays_required, num_cus_delayed;
 long double mean_inter_arr_time, mean_service_time, area_num_in_q, area_server_status, sim_time, time_arrival[Q_LIMIT + 1], time_last_event, next_arrival_time, next_departure_time[10000], min_next_departure_time, total_of_delays;
+
 FILE *infile, *outfile;
 
 void initialize(void);
@@ -19,6 +21,7 @@ void update_time_avg_stats(void);
 void arrival(void);
 void departure(void);
 void report(void);
+
 long double exponential(long double mean);
 long double min_departure_time(long double next_departure_time[]); // detect the smallest departure time
 
@@ -38,6 +41,7 @@ int main() {
         //printf("num in queue = %d\n",num_in_q);
         timing(); // Determine the next event
         update_time_avg_stats(); // Update time_average area_num_in_q area_server_status
+
         switch (next_event_type)
         {
         case 1:
@@ -47,7 +51,6 @@ int main() {
             departure();
             break;
         }
-
     }
     
     report();
@@ -90,7 +93,6 @@ void timing(void){
         min_time_next_event = min_next_departure_time;
         next_event_type = 2;
     }
-
     if(next_event_type == 0){
         fprintf(outfile,"\nEvent list is empty at time %Lf",sim_time);
         exit(1);
@@ -118,6 +120,7 @@ void update_time_avg_stats(void){
     double time_since_last_event;
     time_since_last_event = sim_time - time_last_event;
     time_last_event = sim_time;
+    
     area_num_in_q += num_in_q * time_since_last_event;
     area_server_status += (total_num_of_server - num_of_server_idle) * time_since_last_event;
 }
@@ -126,7 +129,7 @@ void arrival(void){
     double delay;
     
     next_arrival_time = sim_time + exponential(mean_inter_arr_time);
-    if(num_of_server_idle == 0){ //if every server is busy
+    if(num_of_server_idle == 0){
         ++num_in_q;
         if (num_in_q > Q_LIMIT){
             fprintf(outfile, "\nOverflow of the array time_arrival at");
@@ -147,8 +150,8 @@ void arrival(void){
                 break;
             }
         }
+        time_arrival[num_in_q] = sim_time;
     }
-    //printf("num cus deleay = %d\n", num_cus_delayed);
 }
 
 void departure(void){
