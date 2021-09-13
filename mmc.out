@@ -1,10 +1,10 @@
 Mean interarrival time      1.250 minutes
 Mean service time           1.000 minutes
-Number of customers        10000000
+Number of customers       100000000
 Number of servers             003
 -----------------------------------------
 [Theo] Avg delay in queue  0.0236 minutes
-[Expe] Avg delay in queue  0.0236 minutes
+[Expe] Avg delay in queue  0.0237 minutes
 
 [Theo] Avg number in queue 0.0189 
 [Expe] Avg number in queue 0.0189 
@@ -12,4 +12,4 @@ Number of servers             003
 [Theo] Server utilization   0.267 
 [Expe] Server utilization   0.267 
 -----------------------------------------
-Time simulation ended 12496112.122 minutes
+Time simulation ended 124991129.914 minutes

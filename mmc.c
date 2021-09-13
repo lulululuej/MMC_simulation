@@ -8,7 +8,6 @@
 #define Q_LIMIT 1000000
 
 int next_event_type, num_events, num_in_q;
-int server_status[10000];
 int num_of_server_idle, server_number, total_num_of_server;
 int num_delays_required, num_cus_delayed;
 long double mean_inter_arr_time, mean_service_time, area_num_in_q, area_server_status, sim_time, time_arrival[Q_LIMIT + 1], time_last_event, next_arrival_time, next_departure_time[10000], min_next_departure_time, total_of_delays;
@@ -117,7 +116,7 @@ long double exponential(long double mean){
 }
 
 void update_time_avg_stats(void){
-    double time_since_last_event;
+    long double time_since_last_event;
     time_since_last_event = sim_time - time_last_event;
     time_last_event = sim_time;
     
@@ -126,7 +125,7 @@ void update_time_avg_stats(void){
 }
 
 void arrival(void){
-    double delay;
+    long double delay;
     
     next_arrival_time = sim_time + exponential(mean_inter_arr_time);
     if(num_of_server_idle == 0){
